@@ -9,7 +9,7 @@ from xgboost import XGBClassifier
 # ── Charger les données ──────────────────────────────────
 # ✅ CORRIGÉ : read_excel au lieu de read_csv (fichier .xlsx)
 data = pd.read_excel(
-    r"C:\Users\eyadh\Desktop\pcd\test1\graftai_app\mat_brazil.xlsx"
+    r"C:\Users\eyadh\Desktop\PCD testing\LES VERSIONS EN COPIES\PROTOTYPE AVEC XAI\graftai_app\train_dataset.xlsx"
 )
 
 # ── Traduction ───────────────────────────────────────────
@@ -51,14 +51,14 @@ def traduction(df):
 
 def drop_columns(df):
     cols_to_drop = [
-        'date.tx', 'cold_ischemia_time', 'ohter_information.Tx',
-        'cause_convertion', 'date.diag', 'date_eculizumab', 'time_eculizumabe',
-        'variant', 'ADAMST13', 'Shigatox', 'biopsy', 'trat.suport', 'change.IS',
-        'time.trat.ecu', 'intercorrence.trat', 'date_event', 'genetic_description',
+        'lost_MAT', 'date.tx', 'ohter_information.Tx', 'cause_convertion',
+        'date.diag', 'date_eculizumab', 'time_eculizumabe', 'variant',
+        'ADAMST13', 'Shigatox', 'biopsy', 'trat.suport', 'change.IS',
+        'time.trat.ecu', 'intercorrence.trat', 'date_event', 'variant.1',
+        'genetic_description', 'final_creatinine', 'access_ecu', 'NA',
     ]
-    # ✅ On ne drop que les colonnes qui existent réellement dans le df
     existing = [c for c in cols_to_drop if c in df.columns]
-    return df.drop(columns=existing, axis=1)
+    return df.drop(columns=existing)   # ← axis=1 supprimé
 
 
 def nan_values(df):
@@ -84,7 +84,7 @@ print(f"✅ Shape après preprocessing : {df.shape}")
 print(f"📋 Colonnes : {df.columns.tolist()}")
 
 X = df.drop('rejection', axis=1)
-y = df['rejection'].replace({'yes': 1, 'no': 0})
+y = df['rejection'].replace({'yes': 1, 'no': 0}).astype(int)
 
 print(f"\n🎯 Distribution cible :\n{y.value_counts()}")
 
@@ -142,11 +142,15 @@ print("\n💾 Sauvegarde des fichiers .pkl...")
 
 col_order = categorical_cols + numerical_cols   # ordre exact du transformer
 
-joblib.dump(transformer, "transformer.pkl")
-joblib.dump(model_xgb,   "model.pkl")
-joblib.dump(X_train_t,   "X_train.pkl")
-joblib.dump(y_train,     "y_train.pkl")
-joblib.dump(col_order,   "col_order.pkl")
+col_order = categorical_cols + numerical_cols
+
+joblib.dump(transformer,  "transformer.pkl")
+joblib.dump(model_xgb,    "model.pkl")
+joblib.dump(X_train_t,    "X_train.pkl")
+joblib.dump(y_train,      "y_train.pkl")
+joblib.dump(col_order,    "col_order.pkl")
+joblib.dump(X_train,      "X_train_raw.pkl")  # ← ajoute cette ligne
+print("✅ X_train_raw.pkl sauvegardé")
 
 print("✅ Fichiers sauvegardés :")
 print("   - transformer.pkl")

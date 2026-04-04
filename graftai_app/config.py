@@ -77,11 +77,7 @@ NUMERICAL_FEATURES = {
         "default": 2014, "unit": "",
         "label": "Année de transplantation"
     },
-    "final_creatinine": {
-        "type": "float", "min": 0.0, "max": 20.0,
-        "default": 2.0, "unit": "mg/dL",
-        "label": "Créatinine finale du patient"
-    },
+    
 }
  
 # ══════════════════════════════════════════════════════════════
@@ -135,12 +131,7 @@ CATEGORICAL_FEATURES = {
         "CFHR1 e CFHR3", "THBD, PLG", "other",
     ],
  
-    # ── Suivi MAT ────────────────────────────────────────────
-    "lost_MAT":             ["no", "yes"],
-    "variant.1":            ["not carried out", "other"],
-    "access_ecu":           ["did not receive", "donation", "judicial"],
-    "NA":                   ["no", "yes"],
- 
+    
     # ── Traitement combiné ───────────────────────────────────
     "trat_combined":        [
         "no treatment",
@@ -171,11 +162,7 @@ CATEGORICAL_LABELS = {
     "death":                "Décès",
     "cause.death":          "Cause du décès",
     "gene":                 "Gène muté identifié",
-    "lost_MAT":             "Perdu de vue MAT",
-    "variant.1":            "Variant génétique secondaire",
-    "access_ecu":           "Accès à l'éculizumab",
-    "NA":                   "Valeur NA",
-    "trat_combined":        "Traitement combiné MAT",
+    "trat_combined":        "Traitement combiné post-greffe",
 }
  
 # ── Features à fort impact sur la prédiction ─────────────

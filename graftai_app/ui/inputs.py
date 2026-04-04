@@ -71,4 +71,4 @@ def render_patient_form() -> tuple[np.ndarray, list[float], list[float]]:
     # ── Transformer ──────────────────────────────────────
     input_vec = transformer.transform(input_df)[0]
 
-    return input_vec, num_values, cat_values_idx
+    return input_vec, num_values, cat_values_idx,input_df
